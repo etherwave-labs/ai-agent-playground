@@ -1,6 +1,6 @@
 import type { Plugin, Action, HandlerCallback, IAgentRuntime, Memory, State } from "@elizaos/core";
 
-//exemple pour tester
+//exemple pour tester (pas actif, juste pour avoir la forme)
 const solanaGoatAction: Action = {
   name: "SOLANAGOAT",
   similes: [

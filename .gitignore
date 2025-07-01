@@ -56,5 +56,5 @@ lerna-debug.log*
 **/data/uploads/
 **/data/generated/
 
-# Sauvegarde temporaire
-backup_code/ 
+# data
+trades.json

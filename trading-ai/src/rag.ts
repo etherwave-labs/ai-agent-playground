@@ -104,6 +104,25 @@ const rag: Action = {
             console.log("Pas de fichier existant, création d'un nouveau tableau");
           }
           
+          // Vérifier si ce trade existe déjà (éviter les doublons)
+          const isDuplicate = trades.some(existingTrade => 
+            existingTrade.trade.toLowerCase() === trade.trade.toLowerCase() &&
+            existingTrade.allocation === trade.allocation &&
+            existingTrade.stoploss === trade.stoploss &&
+            existingTrade.takeprofit === trade.takeprofit &&
+            existingTrade.sentiment === trade.sentiment
+          );
+          
+          if (isDuplicate) {
+            console.log("Trade identique déjà existant, pas de sauvegarde");
+            await callback({
+              text: "trade already exists in memory",
+              actions: ["RAG"],
+              source: message.content.source,
+            });
+            return true;
+          }
+          
           const timestamp = {
             ...trade,
             timestamp: new Date().toISOString(),
