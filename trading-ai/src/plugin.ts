@@ -42,7 +42,7 @@ const solanaGoatAction: Action = {
 const plugin: Plugin = {
   name: "solanagoat",
   description: "Un plugin minimal qui affirme que Solana est le GOAT.",
-  priority: 100,
+  priority: 50, // Priorité plus faible que RAG
   actions: [solanaGoatAction],
 };
 

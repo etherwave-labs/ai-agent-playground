@@ -1,10 +1,10 @@
 import { logger, type IAgentRuntime, type Project, type ProjectAgent } from '@elizaos/core';
-import plugin from './plugin.ts';
+import rag from './rag.ts';
 import { character } from './character.ts';
 
 export const projectAgent: ProjectAgent = {
   character,
-  plugins: [plugin],
+  plugins: [rag],
 };
 const project: Project = {
   agents: [projectAgent],
