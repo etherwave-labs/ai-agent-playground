@@ -30,7 +30,15 @@ const getRagPlugin: Provider = {
             
             if (lastTrade) {
                 const date = new Date(lastTrade.timestamp).toLocaleString('fr-FR');
-                contextText += `- Dernier trade: ${lastTrade.trade.toUpperCase()} (${lastTrade.allocation}%, Stop: $${lastTrade.stoploss}, Target: $${lastTrade.takeprofit}, Sentiment: ${lastTrade.sentiment}%) du ${date}`;
+                contextText += `- Dernier trade: ${lastTrade.trade.toUpperCase()} (${lastTrade.allocation}%, Stop: $${lastTrade.stoploss}, Target: $${lastTrade.takeprofit}, Sentiment: ${lastTrade.sentiment}%, ID: ${lastTrade.id}) du ${date}`;
+            }
+
+            if (openTrades.length > 0) {
+                contextText += `\n- Trades ouverts:\n`;
+                openTrades.forEach(trade => {
+                    const date = new Date(trade.timestamp).toLocaleString('fr-FR');
+                    contextText += `  • ${trade.trade.toUpperCase()} (ID: ${trade.id}, ${trade.allocation}%, Stop: $${trade.stoploss}, Target: $${trade.takeprofit}, Sentiment: ${trade.sentiment}%) du ${date}\n`;
+                });
             }
 
             return {

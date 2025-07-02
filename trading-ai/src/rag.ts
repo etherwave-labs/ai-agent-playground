@@ -7,11 +7,14 @@ interface Trade {
   stoploss: number;       // en $
   takeprofit: number;     // en $
   sentiment: number;      // en %
+  id?: number;            // optionnel
+  timestamp?: string;     // optionnel
+  state?: string;         // optionnel
 }
 
 function extractLastTrade(runtime: IAgentRuntime): Trade | null {
   const TRADE_REGEX =
-    /trade:\s*(?<trade>long|short)\s*,\s*allocation:\s*(?<allocation>\d+(?:\.\d+)?)%\s*,\s*stoploss:\s*\$(?<stoploss>\d+(?:\.\d+)?)\s*,\s*takeprofit:\s*\$(?<takeprofit>\d+(?:\.\d+)?)\s*,\s*sentiment:\s*(?<sentiment>\d+(?:\.\d+)?)%/gi;
+    /trade:\s*(?<trade>long|short)\s*,\s*allocation:\s*(?<allocation>\d+(?:\.\d+)?)%\s*,\s*stoploss:\s*\$(?<stoploss>\d+(?:\.\d+)?)\s*,\s*takeprofit:\s*\$(?<takeprofit>\d+(?:\.\d+)?)\s*,\s*sentiment:\s*(?<sentiment>\d+(?:\.\d+)?)%(?:\s*,\s*id:\s*(?<id>\d+))?/gi;
 
   let lastMatch: RegExpMatchArray | null = null;
 
@@ -27,15 +30,42 @@ function extractLastTrade(runtime: IAgentRuntime): Trade | null {
 
   if (!lastMatch || !lastMatch.groups) return null;
 
-  const { trade, allocation, stoploss, takeprofit, sentiment } = lastMatch.groups;
+  const { trade, allocation, stoploss, takeprofit, sentiment, id } = lastMatch.groups;
 
-  return {
+  const result: Trade = {
     trade: trade as 'long' | 'short',
     allocation: Number(allocation),
     stoploss: Number(stoploss),
     takeprofit: Number(takeprofit),
     sentiment: Number(sentiment),
   };
+
+  if (id) {
+    result.id = Number(id);
+  }
+
+  return result;
+}
+
+function extractDeleteCommand(runtime: IAgentRuntime): number | null {
+  const DELETE_REGEX = /id:\s*(?<id>\d+)\s*,\s*DELETE/gi;
+
+  let lastMatch: RegExpMatchArray | null = null;
+
+  const stateCache = (runtime as any).stateCache;
+  if (!stateCache) return null;
+
+  for (const [, entry] of stateCache) {
+    const matches = [...(entry.text || '').matchAll(DELETE_REGEX)];
+    if (matches.length) {
+      lastMatch = matches[matches.length - 1];
+    }
+  }
+
+  if (!lastMatch || !lastMatch.groups) return null;
+
+  const { id } = lastMatch.groups;
+  return Number(id);
 }
 
 const rag: Action = {
@@ -61,6 +91,21 @@ const rag: Action = {
       "trade analysis",
       "crypto trade",
       "trading signal",
+      "execute trade",
+      "execute trades",
+      "execute trade",
+      "analyze trade",
+      "analyze trades",
+      "analyze trade",
+      "analyse ça",
+      "delete trade",
+      "remove trade",
+      "supprimer trade",
+      "supprimer le trade",
+      "enlever trade",
+      "delete",
+      "remove",
+      "supprimer",
     ],
     description: "save the trades in a json file after each trade",
   
@@ -73,6 +118,24 @@ const rag: Action = {
       _options: unknown,
       callback: HandlerCallback,
     ): Promise<boolean> => {
+      const deleteId = extractDeleteCommand(_runtime);
+      if (deleteId) {
+        console.log("id trouvé, suppression du trade");
+        const filePath = './trades.json';
+        const ragData = fs.readFileSync(filePath, "utf-8");
+        const trades = JSON.parse(ragData);
+        const updatedTrades = trades.filter((trade: any) => trade.id !== deleteId);
+
+        fs.writeFileSync(filePath, JSON.stringify(updatedTrades, null, 2));
+
+        console.log(`Trade avec l'id ${deleteId} supprimé.`);
+        await callback({
+          text: "trade deleted from memory",
+          actions: ["RAG"],
+          source: message.content.source,
+        });
+        return true;
+      }
       const trade = extractLastTrade(_runtime);
       console.log("Trade trouvé:", trade);
       
@@ -104,6 +167,34 @@ const rag: Action = {
             console.log("Pas de fichier existant, création d'un nouveau tableau");
           }
           
+          // Vérifier si on doit modifier un trade existant basé sur l'id
+          if (trade.id && trade.id > 0) {
+            const existingTradeIndex = trades.findIndex(t => t.id === trade.id);
+            if (existingTradeIndex !== -1) {
+              console.log("id existant, modification du trade");
+              trades[existingTradeIndex] = {
+                ...trades[existingTradeIndex],
+                trade: trade.trade,
+                allocation: trade.allocation,
+                stoploss: trade.stoploss,
+                takeprofit: trade.takeprofit,
+                sentiment: trade.sentiment,
+                timestamp: new Date().toISOString()
+              };
+              
+              const data = JSON.stringify(trades, null, 2);
+              fs.writeFileSync(filePath, data);
+              console.log(`Trade modifié avec id ${trade.id}`);
+              
+              await callback({
+                text: "trade updated in memory",
+                actions: ["RAG"],
+                source: message.content.source,
+              });
+              return true;
+            }
+          }
+          
           // Vérifier si ce trade existe déjà (éviter les doublons)
           const isDuplicate = trades.some(existingTrade => 
             existingTrade.trade.toLowerCase() === trade.trade.toLowerCase() &&
@@ -123,14 +214,14 @@ const rag: Action = {
             return true;
           }
           
-          const timestamp = {
+          const newTrade: Trade = {
             ...trade,
             timestamp: new Date().toISOString(),
-            id: Date.now(),
+            id: trade.id || Date.now(),
             state: "open"
           };
           
-          trades.push(timestamp);
+          trades.push(newTrade);
           
           const data = JSON.stringify(trades, null, 2);
           fs.writeFileSync(filePath, data);
@@ -151,11 +242,15 @@ const rag: Action = {
   
     examples: [
       [
-        { name: "{{user}}", content: { text: "btc pump" } },
+        { name: "{{user}}", content: { text: "analyse ça" } },
         { name: "{{agent}}", content: { text: "trades saved in memory", actions: ["RAG"] } },
       ],
       [
         { name: "{{user}}", content: { text: "btc pump last night" } },
+        { name: "{{agent}}", content: { text: "trades saved in memory", actions: ["RAG"] } },
+      ],
+      [
+        { name: "{{user}}", content: { text: "powell speech today" } },
         { name: "{{agent}}", content: { text: "trades saved in memory", actions: ["RAG"] } },
       ],
     ],
