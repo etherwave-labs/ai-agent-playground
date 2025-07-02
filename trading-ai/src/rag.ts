@@ -43,29 +43,36 @@ function extractLastTrade(runtime: IAgentRuntime): Trade | null {
   if (id) {
     result.id = Number(id);
   }
-
+  
+  console.log("Trade a supprimer trouvé:", result.id);
   return result;
 }
 
-function extractDeleteCommand(runtime: IAgentRuntime): number | null {
-  const DELETE_REGEX = /id:\s*(?<id>\d+)\s*,\s*DELETE/gi;
-
-  let lastMatch: RegExpMatchArray | null = null;
+function extractLastDeleteCommand(runtime: IAgentRuntime): number | null {
+  // Virgule optionnelle + limites de mots pour plus de souplesse
+  const DELETE_REGEX = /\bid:\s*(?<id>\d+)\s*,?\s*DELETE\b/gi;
 
   const stateCache = (runtime as any).stateCache;
   if (!stateCache) return null;
 
+  let lastId: number | null = null;
+
+  // `stateCache` est supposé être un `Map` ou équivalent
   for (const [, entry] of stateCache) {
-    const matches = [...(entry.text || '').matchAll(DELETE_REGEX)];
-    if (matches.length) {
-      lastMatch = matches[matches.length - 1];
+    const text = entry.text ?? '';
+    // On balaie toutes les occurrences du message
+    for (const match of text.matchAll(DELETE_REGEX)) {
+      const idStr = match.groups?.id;
+      if (!idStr) continue;
+
+      const idNum = Number(idStr);
+      if (!Number.isNaN(idNum)) {
+        lastId = idNum;          // on garde la plus récente
+      }
     }
   }
 
-  if (!lastMatch || !lastMatch.groups) return null;
-
-  const { id } = lastMatch.groups;
-  return Number(id);
+  return lastId;
 }
 
 const rag: Action = {
@@ -98,14 +105,6 @@ const rag: Action = {
       "analyze trades",
       "analyze trade",
       "analyse ça",
-      "delete trade",
-      "remove trade",
-      "supprimer trade",
-      "supprimer le trade",
-      "enlever trade",
-      "delete",
-      "remove",
-      "supprimer",
     ],
     description: "save the trades in a json file after each trade",
   
@@ -118,24 +117,6 @@ const rag: Action = {
       _options: unknown,
       callback: HandlerCallback,
     ): Promise<boolean> => {
-      const deleteId = extractDeleteCommand(_runtime);
-      if (deleteId) {
-        console.log("id trouvé, suppression du trade");
-        const filePath = './trades.json';
-        const ragData = fs.readFileSync(filePath, "utf-8");
-        const trades = JSON.parse(ragData);
-        const updatedTrades = trades.filter((trade: any) => trade.id !== deleteId);
-
-        fs.writeFileSync(filePath, JSON.stringify(updatedTrades, null, 2));
-
-        console.log(`Trade avec l'id ${deleteId} supprimé.`);
-        await callback({
-          text: "trade deleted from memory",
-          actions: ["RAG"],
-          source: message.content.source,
-        });
-        return true;
-      }
       const trade = extractLastTrade(_runtime);
       console.log("Trade trouvé:", trade);
       
@@ -255,12 +236,82 @@ const rag: Action = {
       ],
     ],
   };
-  
+
+  const deleteTrade: Action = {
+    name: "DELETETRADE",
+    description: "delete a trade from the memory",
+    similes: [
+      "delete trade",
+      "remove trade",
+      "supprimer trade",
+      "supprimer le trade",
+      "enlever trade",
+      "delete",
+      "remove",
+      "supprimer",
+      "supprime ce trade",
+      "supprime trade",
+      "supprime le trade",
+      "enleve trade",
+      "enleve le trade",
+      "delete trade",
+      "remove trade",
+      "supprime trade",
+    ],
+    handler: async (
+      _runtime: IAgentRuntime,
+      message: Memory,
+      _state: State,
+      _options: unknown,
+      callback: HandlerCallback,
+    ): Promise<boolean> => {
+        const deleteId = extractLastDeleteCommand(_runtime);
+      if (deleteId) {
+        console.log("id trouvé, suppression du trade");
+        const filePath = './trades.json';
+        const ragData = fs.readFileSync(filePath, "utf-8");
+        const trades = JSON.parse(ragData);
+        const updatedTrades = trades.filter((trade: any) => trade.id !== deleteId);
+
+        fs.writeFileSync(filePath, JSON.stringify(updatedTrades, null, 2));
+
+        console.log(`Trade avec l'id ${deleteId} supprimé.`);
+        await callback({
+          text: "trade deleted from memory",
+          actions: ["DELETETRADE"],
+          source: message.content.source,
+        });
+        return true;
+      }
+      await callback({
+        text: "no valid delete command found",
+        actions: ["DELETETRADE"],
+        source: message.content.source,
+      });
+      return false;
+    },
+    validate: async () => true,
+    examples: [
+      [
+        { name: "{{user}}", content: { text: "delete trade" } },
+        { name: "{{agent}}", content: { text: "trade deleted from memory", actions: ["DELETETRADE"] } },
+      ],
+      [
+        { name: "{{user}}", content: { text: "delete last trade" } },
+        { name: "{{agent}}", content: { text: "trade deleted from memory", actions: ["DELETETRADE"] } },
+      ],
+      [
+        { name: "{{user}}", content: { text: "supprime le dernier trade" } },
+        { name: "{{agent}}", content: { text: "trade deleted from memory", actions: ["DELETETRADE"] } },
+      ],
+    ],
+  };
+
   const plugin: Plugin = {
     name: "rag-memory",
     description: "Un plugin qui sauvegarde les trades dans un fichier json",
     priority: 150,
-    actions: [rag],
+    actions: [rag, deleteTrade],
   };
 
   export default plugin;

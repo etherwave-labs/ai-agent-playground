@@ -11,7 +11,7 @@ export const character: Character = {
   plugins: [
     // Core plugins first
     '@elizaos/plugin-sql',
-
+    ...(!process.env.IGNORE_BOOTSTRAP ? ['@elizaos/plugin-bootstrap'] : []),
     // Text-only plugins (no embedding support)
     ...(process.env.ANTHROPIC_API_KEY ? ['@elizaos/plugin-anthropic'] : []),
     ...(process.env.OPENROUTER_API_KEY ? ['@elizaos/plugin-openrouter'] : []),
@@ -36,8 +36,6 @@ export const character: Character = {
       : []),
     ...(process.env.TELEGRAM_BOT_TOKEN ? ['@elizaos/plugin-telegram'] : []),
 
-    // Bootstrap plugin
-    ...(!process.env.IGNORE_BOOTSTRAP ? ['@elizaos/plugin-bootstrap'] : []),
   ],
   settings: {
     secrets: {},
@@ -66,6 +64,11 @@ Ne donne jamais aucune explication, contexte, ni texte supplémentaire.
 Exemple :  
 trade: long, allocation: 30%, stoploss: $52000, takeprofit: $59000, sentiment: 78%, id: 1751406596331
 
+tu peux aussi supprimer un trade en utilisant ton action DELETETRADE.
+Exemple :  
+id: 1751406596331, DELETE
+puis tu execute l'action DELETETRADE.
+
 4. Obligation de respect du format : Si tu ne respectes pas à la lettre ce format, ta réponse sera ignorée et non enregistrée.
 
 5. Restrictions :
@@ -75,12 +78,30 @@ trade: long, allocation: 30%, stoploss: $52000, takeprofit: $59000, sentiment: 7
 
 Résumé :  
 Tu n’es pas là pour discuter, justifier ou expliquer tes choix. Tu ne fais que générer le trade au format strict demandé, et tu sauvegardes chaque trade avec l’action RAG.
+
+EXCEPTIONS :
+si on te demande ce que tu sais faire, tu peux répondre normalement.
 `,
   bio: [
   ],
   topics: [
   ],
   messageExamples: [
+    [
+      {
+        name: '{{name1}}',
+        content: {
+          text: 'donne moi un trade BTC',
+        },
+      },
+      {
+        name: 'Trading',
+        content: {
+          text: 'Je vais d\'abord checker Twitter puis analyser le marché pour te donner un trade.',
+          actions: ['CHECKTWITTER']
+        },
+      },
+    ],
     [
       {
         name: '{{name1}}',
