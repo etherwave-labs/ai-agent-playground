@@ -1,5 +1,4 @@
 import { Provider, Plugin } from '@elizaos/core';
-import https from 'https';
 import { URL } from 'url';
 
 interface CoinMarketData {
@@ -43,26 +42,45 @@ async function fetchBTCPrice(): Promise<number> {
   }
 
 const fetchBTCPriceProvider: Provider = {
-    name: 'fetchBTCPrice',
+    name: 'btcPrice',
     description: 'Récupère le prix du Bitcoin',
     position: 9,
     get: async () => {
         try {
-            const data = await fetchBTCPrice();
+            console.log("Provider fetchBTCPrice: Récupération du prix...");
+            const price = await fetchBTCPrice();
+            console.log(`Provider fetchBTCPrice: Prix récupéré: $${price}`);
             return {
-                text: `Le prix du Bitcoin est de ${data} USD`,
+                text: `Le prix du Bitcoin est actuellement de $${price.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`,
+                values: { 
+                    currentPrice: price,
+                    currency: 'USD',
+                    timestamp: new Date().toISOString()
+                },
+                data: { 
+                    btc: { 
+                        price: price, 
+                        currency: 'USD',
+                        lastUpdated: new Date().toISOString()
+                    } 
+                }
             }
         } catch (error) {
             console.error('Erreur lors de la récupération du prix du Bitcoin:', error);
             return {
                 text: 'Une erreur est survenue lors de la récupération du prix du Bitcoin.',
+                values: { 
+                    currentPrice: null,
+                    error: error.message
+                },
+                data: { error: error.message }
             }
         }
     }
 }
 
 const plugin: Plugin = {
-    name: 'fetchBTCPrice',
+    name: 'fetch-btc-price-provider',
     description: 'Récupère le prix du Bitcoin',
     providers: [fetchBTCPriceProvider],
     priority: 150,

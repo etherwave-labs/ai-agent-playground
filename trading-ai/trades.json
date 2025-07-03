@@ -2,91 +2,11 @@
   {
     "trade": "long",
     "allocation": 25,
-    "stoploss": 95000,
-    "takeprofit": 110000,
-    "sentiment": 72,
-    "timestamp": "2025-07-02T12:25:02.278Z",
-    "id": 1751459102278,
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 20,
-    "stoploss": 96000,
-    "takeprofit": 108000,
-    "sentiment": 68,
-    "timestamp": "2025-07-02T12:34:48.430Z",
-    "id": 1751459688430,
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 30,
-    "stoploss": 52000,
-    "takeprofit": 59000,
-    "sentiment": 78,
-    "id": 1751406596331,
-    "timestamp": "2025-07-02T14:55:44.217Z",
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 25,
-    "stoploss": 96500,
-    "takeprofit": 105000,
-    "sentiment": 75,
-    "timestamp": "2025-07-02T14:52:38.039Z",
-    "id": 1751467958039,
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 35,
-    "stoploss": 96000,
-    "takeprofit": 108000,
-    "sentiment": 82,
-    "timestamp": "2025-07-02T16:45:33.406Z",
-    "id": 1751474733406,
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 28,
-    "stoploss": 97000,
-    "takeprofit": 106000,
-    "sentiment": 74,
-    "timestamp": "2025-07-02T17:37:58.732Z",
-    "id": 1751477878732,
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 22,
-    "stoploss": 95500,
-    "takeprofit": 107000,
-    "sentiment": 71,
-    "timestamp": "2025-07-03T08:58:20.655Z",
-    "id": 1751533100655,
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 25,
-    "stoploss": 96000,
-    "takeprofit": 108000,
-    "sentiment": 73,
-    "timestamp": "2025-07-03T09:00:39.358Z",
-    "id": 1751533239358,
-    "state": "open"
-  },
-  {
-    "trade": "long",
-    "allocation": 20,
     "stoploss": 105000,
     "takeprofit": 115000,
-    "sentiment": 76,
-    "timestamp": "2025-07-03T09:05:31.356Z",
-    "id": 1751533531356,
+    "sentiment": 72,
+    "timestamp": "2025-07-03T10:35:59.080Z",
+    "id": 1751538959080,
     "state": "open"
   }
 ]

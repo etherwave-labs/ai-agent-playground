@@ -2,11 +2,13 @@ import { logger, type IAgentRuntime, type Project, type ProjectAgent } from '@el
 import rag from './actions/rag.ts';
 import getRagPlugin from './providers/getRagPlugin.ts';
 import fetchBTCPricePlugin from './providers/fetchBTCPrice.ts';
+import fetchNewsCoinDeskPlugin from './providers/fetchNewsCoinDesk.ts';
+//import fetchTwitterPlugin from './providers/fechTwitter.ts';
 import { character } from './character.ts';
 
 export const projectAgent: ProjectAgent = {
   character,
-  plugins: [rag, getRagPlugin, fetchBTCPricePlugin],
+  plugins: [rag, getRagPlugin, fetchBTCPricePlugin, fetchNewsCoinDeskPlugin],
 };
 const project: Project = {
   agents: [projectAgent],
