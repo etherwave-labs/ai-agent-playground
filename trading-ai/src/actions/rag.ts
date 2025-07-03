@@ -49,7 +49,6 @@ function extractLastTrade(runtime: IAgentRuntime): Trade | null {
 }
 
 function extractLastDeleteCommand(runtime: IAgentRuntime): number | null {
-  // Virgule optionnelle + limites de mots pour plus de souplesse
   const DELETE_REGEX = /\bid:\s*(?<id>\d+)\s*,?\s*DELETE\b/gi;
 
   const stateCache = (runtime as any).stateCache;
@@ -57,17 +56,15 @@ function extractLastDeleteCommand(runtime: IAgentRuntime): number | null {
 
   let lastId: number | null = null;
 
-  // `stateCache` est supposé être un `Map` ou équivalent
   for (const [, entry] of stateCache) {
     const text = entry.text ?? '';
-    // On balaie toutes les occurrences du message
     for (const match of text.matchAll(DELETE_REGEX)) {
       const idStr = match.groups?.id;
       if (!idStr) continue;
 
       const idNum = Number(idStr);
       if (!Number.isNaN(idNum)) {
-        lastId = idNum;          // on garde la plus récente
+        lastId = idNum;
       }
     }
   }
@@ -148,7 +145,6 @@ const rag: Action = {
             console.log("Pas de fichier existant, création d'un nouveau tableau");
           }
           
-          // Vérifier si on doit modifier un trade existant basé sur l'id
           if (trade.id && trade.id > 0) {
             const existingTradeIndex = trades.findIndex(t => t.id === trade.id);
             if (existingTradeIndex !== -1) {
@@ -176,7 +172,6 @@ const rag: Action = {
             }
           }
           
-          // Vérifier si ce trade existe déjà (éviter les doublons)
           const isDuplicate = trades.some(existingTrade => 
             existingTrade.trade.toLowerCase() === trade.trade.toLowerCase() &&
             existingTrade.allocation === trade.allocation &&

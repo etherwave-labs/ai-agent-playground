@@ -1,12 +1,12 @@
 import { logger, type IAgentRuntime, type Project, type ProjectAgent } from '@elizaos/core';
-import rag from './rag.ts';
-import discordPlugin from '@elizaos/plugin-discord';
-import getRagPlugin from './getRagPlugin.ts';
+import rag from './actions/rag.ts';
+import getRagPlugin from './providers/getRagPlugin.ts';
+import fetchBTCPricePlugin from './providers/fetchBTCPrice.ts';
 import { character } from './character.ts';
 
 export const projectAgent: ProjectAgent = {
   character,
-  plugins: [rag, getRagPlugin],
+  plugins: [rag, getRagPlugin, fetchBTCPricePlugin],
 };
 const project: Project = {
   agents: [projectAgent],

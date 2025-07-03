@@ -38,5 +38,55 @@
     "timestamp": "2025-07-02T14:52:38.039Z",
     "id": 1751467958039,
     "state": "open"
+  },
+  {
+    "trade": "long",
+    "allocation": 35,
+    "stoploss": 96000,
+    "takeprofit": 108000,
+    "sentiment": 82,
+    "timestamp": "2025-07-02T16:45:33.406Z",
+    "id": 1751474733406,
+    "state": "open"
+  },
+  {
+    "trade": "long",
+    "allocation": 28,
+    "stoploss": 97000,
+    "takeprofit": 106000,
+    "sentiment": 74,
+    "timestamp": "2025-07-02T17:37:58.732Z",
+    "id": 1751477878732,
+    "state": "open"
+  },
+  {
+    "trade": "long",
+    "allocation": 22,
+    "stoploss": 95500,
+    "takeprofit": 107000,
+    "sentiment": 71,
+    "timestamp": "2025-07-03T08:58:20.655Z",
+    "id": 1751533100655,
+    "state": "open"
+  },
+  {
+    "trade": "long",
+    "allocation": 25,
+    "stoploss": 96000,
+    "takeprofit": 108000,
+    "sentiment": 73,
+    "timestamp": "2025-07-03T09:00:39.358Z",
+    "id": 1751533239358,
+    "state": "open"
+  },
+  {
+    "trade": "long",
+    "allocation": 20,
+    "stoploss": 105000,
+    "takeprofit": 115000,
+    "sentiment": 76,
+    "timestamp": "2025-07-03T09:05:31.356Z",
+    "id": 1751533531356,
+    "state": "open"
   }
 ]
