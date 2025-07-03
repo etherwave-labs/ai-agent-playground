@@ -30,7 +30,7 @@ async function fetchBTCPrice(): Promise<number> {
     const response = await fetch(url.toString(), {
       headers: {
         'Accept': 'application/json',
-        'x-cg-demo-api-key': 'CG-HuFyo6FjR9S2kdTg4JaYavNT',
+        'x-cg-demo-api-key': process.env.COINGECKO_API_KEY || '',
       },
     });
     if (!response.ok) {

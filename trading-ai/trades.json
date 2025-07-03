@@ -1,12 +1,1 @@
-[
-  {
-    "trade": "long",
-    "allocation": 25,
-    "stoploss": 105000,
-    "takeprofit": 115000,
-    "sentiment": 72,
-    "timestamp": "2025-07-03T10:35:59.080Z",
-    "id": 1751538959080,
-    "state": "open"
-  }
-]
+[]

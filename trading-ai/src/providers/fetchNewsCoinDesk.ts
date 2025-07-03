@@ -3,11 +3,11 @@ import { Provider, Plugin } from '@elizaos/core';
 async function fetchCoindeskArticles(
     lang = 'EN',
     limit = 10,
-    apiKey = 'bd0c072a109efe7c2fd33a317951442406021daa9a55504583e78024cecada25',
+    apiKey = process.env.COINDESK_API_KEY,
     category = 'BTC'
   ): Promise<any> {
     const base = 'https://data-api.coindesk.com/news/v1/article/list';
-    const url = `${base}?${new URLSearchParams({ lang, limit: limit.toString(), api_key: apiKey, category: category })}`;
+    const url = `${base}?${new URLSearchParams({ lang, limit: limit.toString(), api_key: apiKey || '', category: category })}`;
   
     const res = await fetch(url, { headers: { 'Content-Type': 'application/json' } });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
