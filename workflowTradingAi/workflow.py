@@ -9,12 +9,18 @@ URL = (
 
 payload = {
     "author_id": "f6a0a8d1-f28d-4538-bdab-5eb0b527430c",
-    "content": "fais un trade",
+    "content": """Analyse le marché BTC en temps réel.
+Si tu détectes une opportunité claire d’achat, renvoie UNE SEULE ligne “trade: buy …” au format strict.
+Si tu détectes une opportunité claire de vente, renvoie UNE SEULE ligne “id: x, DELETE” (ou x est l'id du trade a annuler) au format strict.
+Si aucune opportunité n’est jugée assez forte (p. ex. sentiment < 70 %), renvoie UNE SEULE ligne "trade: wait ..." au format strict.""",
     "server_id": "00000000-0000-0000-0000-000000000000",
     "raw_message": {
         "roomId": "91b0c098-b2c3-44f8-9dbb-f0d3ca2626f4",
         "source": "client_chat",
-        "message": "fais un trade",
+        "message": """Analyse le marché BTC en temps réel.
+Si tu détectes une opportunité claire d’achat, renvoie UNE SEULE ligne “trade: buy …” au format strict.
+Si tu détectes une opportunité claire de vente, renvoie UNE SEULE ligne “id: x, DELETE” (ou x est l'id du trade a annuler) au format strict.
+Si aucune opportunité n’est jugée assez forte (p. ex. sentiment < 70 %), renvoie UNE SEULE ligne "trade: wait ..." au format strict.""",
         "metadata": {
             "isDm": True,
             "channelType": "DM",
