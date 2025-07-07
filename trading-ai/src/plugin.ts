@@ -1,49 +1,24 @@
-import type { Plugin, Action, HandlerCallback, IAgentRuntime, Memory, State } from "@elizaos/core";
+import { Service, IAgentRuntime } from '@elizaos/core';
 
-//exemple pour tester (pas actif, juste pour avoir la forme)
-const solanaGoatAction: Action = {
-  name: "SOLANAGOAT",
-  similes: [
-    "solana le goat",
-    "solana goat",
-    "solana quel goat",
-  ],
-  description: "Répond \"REEL\" pour confirmer que Solana est le GOAT.",
+export class CustomService extends Service {
+  static serviceType = 'custom';
+  capabilityDescription = 'The agent is able to interact with the custom platform';
 
-  validate: async () => true,
+  constructor(protected runtime: IAgentRuntime) {
+    super();
+    // Initialize platform connection
+    // Set up event handlers
+    // Configure message processing
+  }
 
-  handler: async (
-    _runtime: IAgentRuntime,
-    message: Memory,
-    _state: State,
-    _options: unknown,
-    callback: HandlerCallback,
-  ): Promise<boolean> => {
-    await callback({
-      text: "REEL",
-      actions: ["SOLANAGOAT"],
-      source: message.content.source,
-    });
-    return true;
-  },
+  static async start(runtime: IAgentRuntime): Promise<CustomService> {
+    const service = new CustomService(runtime);
+    // Additional initialization if needed
+    return service;
+  }
 
-  examples: [
-    [
-      { name: "{{user}}", content: { text: "solana quel goat" } },
-      { name: "{{agent}}", content: { text: "REEL", actions: ["SOLANAGOAT"] } },
-    ],
-    [
-      { name: "{{user}}", content: { text: "solana goat" } },
-      { name: "{{agent}}", content: { text: "REEL", actions: ["SOLANAGOAT"] } },
-    ],
-  ],
-};
-
-const plugin: Plugin = {
-  name: "solanagoat",
-  description: "Un plugin minimal qui affirme que Solana est le GOAT.",
-  priority: 50, // Priorité plus faible que RAG
-  actions: [solanaGoatAction],
-};
-
-export default plugin;
+  async stop(): Promise<void> {
+    // Cleanup resources
+    // Close connections
+  }
+}

@@ -1,14 +1,14 @@
-import { logger, type IAgentRuntime, type Project, type ProjectAgent } from '@elizaos/core';
+import { logger, type IAgentRuntime, type Project, type ProjectAgent } from '@elizaos/core';    
 import rag from './actions/rag.ts';
 import getRagPlugin from './providers/getRagPlugin.ts';
 import fetchBTCPricePlugin from './providers/fetchBTCPrice.ts';
 import fetchNewsCoinDeskPlugin from './providers/fetchNewsCoinDesk.ts';
-//import fetchTwitterPlugin from './providers/fechTwitter.ts';
+import getBalanceHyperLiquidPlugin from './providers/getBalanceHyperLiquid.ts';
 import { character } from './character.ts';
 
 export const projectAgent: ProjectAgent = {
   character,
-  plugins: [rag, getRagPlugin, fetchBTCPricePlugin, fetchNewsCoinDeskPlugin],
+  plugins: [rag, getRagPlugin, fetchBTCPricePlugin, fetchNewsCoinDeskPlugin, getBalanceHyperLiquidPlugin],
 };
 const project: Project = {
   agents: [projectAgent],

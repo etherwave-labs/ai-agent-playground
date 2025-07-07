@@ -52,12 +52,39 @@ const getRagPlugin: Provider = {
                 data: { trades: trades, openTrades: openTrades }
             };
         } catch (error) {
-            console.log("Aucun trade trouvé:", error.message);
-            return {
-                text: "Aucun fichier de trades trouvé.",
-                values: { tradesCount: 0, currentTrades: [] },
-                data: { trades: [] }
-            };
+            if (error.code === 'ENOENT') {
+                console.log("Fichier trades.json n'existe pas encore");
+                return {
+                    text: "Aucun fichier de trades trouvé. Nouveau système de trading initialisé.",
+                    values: { tradesCount: 0, currentTrades: [] },
+                    data: { trades: [] }
+                };
+            } else if (error instanceof SyntaxError) {
+                console.log("Fichier trades.json corrompu, réinitialisation nécessaire");
+                // Sauvegarder le fichier corrompu et créer un nouveau fichier vide
+                const filePath = path.join(process.cwd(), 'trades.json');
+                const backupPath = path.join(process.cwd(), `trades_backup_${Date.now()}.json`);
+                try {
+                    const corruptedData = fs.readFileSync(filePath, 'utf8');
+                    fs.writeFileSync(backupPath, corruptedData);
+                    fs.writeFileSync(filePath, '[]');
+                    console.log(`Fichier corrompu sauvegardé dans ${backupPath}`);
+                } catch (backupError) {
+                    console.log("Erreur lors de la sauvegarde du fichier corrompu:", backupError.message);
+                }
+                return {
+                    text: "Fichier de trades corrompu détecté et réinitialisé. Système prêt pour de nouveaux trades.",
+                    values: { tradesCount: 0, currentTrades: [] },
+                    data: { trades: [] }
+                };
+            } else {
+                console.log("Erreur lors de la lecture des trades:", error.message);
+                return {
+                    text: "Erreur lors de la lecture des données de trading. Système en mode dégradé.",
+                    values: { tradesCount: 0, currentTrades: [] },
+                    data: { trades: [] }
+                };
+            }
         }
     }
 }
