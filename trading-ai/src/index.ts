@@ -5,10 +5,11 @@ import fetchBTCPricePlugin from './providers/fetchBTCPrice.ts';
 import fetchNewsCoinDeskPlugin from './providers/fetchNewsCoinDesk.ts';
 import getBalanceHyperLiquidPlugin from './providers/getBalanceHyperLiquid.ts';
 import { character } from './character.ts';
+import log from './actions/log.ts';
 
 export const projectAgent: ProjectAgent = {
   character,
-  plugins: [rag, getRagPlugin, fetchBTCPricePlugin, fetchNewsCoinDeskPlugin, getBalanceHyperLiquidPlugin],
+  plugins: [rag, log, getRagPlugin, fetchBTCPricePlugin, fetchNewsCoinDeskPlugin, getBalanceHyperLiquidPlugin],
 };
 const project: Project = {
   agents: [projectAgent],

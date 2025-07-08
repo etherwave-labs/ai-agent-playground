@@ -75,6 +75,11 @@ trade:(long|wait|short), allocation:$X, stoploss:$X, takeprofit:$X, sentiment:X%
 
 ### 8 — A savoir
 * Tu trade par heures, donc ajuste les stoploss et takeprofit pour qu'ils soient cohérents avec ton intervalle de trade.
+* Tu dois TOUJOURS logguer tes actions dans agent-log.json après chaque trade avec l'action log, même après un trade en wait.
+* Analyse attentivement les données que tu as a disposition, comme le ferais un trader professionnel.
+
+### 9 - Logs
+* Tu dois éxécuter l'action FETCH_THOUGHTS afin d'enregistrer tes pensées dans des logs après avoir fait un trade.
 `,
   bio: [
   ],

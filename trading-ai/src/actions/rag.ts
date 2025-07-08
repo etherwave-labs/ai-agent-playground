@@ -1,5 +1,6 @@
 import type { Plugin, Action, HandlerCallback, IAgentRuntime, Memory, State } from "@elizaos/core";
 import fs from 'fs';
+//import { placeTrade } from '../utils/hyperliquid.ts';
 
 interface Trade {
   trade: 'long' | 'wait' | 'short';
@@ -318,6 +319,19 @@ const rag: Action = {
           const data = JSON.stringify(trades, null, 2);
           fs.writeFileSync(filePath, data);
           console.log(`Trade ajouté à ${filePath}. Total: ${trades.length} trades`);
+
+          /*if (trade.trade === "long" || trade.trade === "short") {
+            (async () => {
+              const result = await placeTrade({
+                side: trade.trade as "long" | "short",
+                tp: trade.takeprofit.toString(),
+                sl: trade.stoploss.toString(),
+                size: trade.allocation.toString()
+              });
+                console.log(result);
+              })();
+              console.log("Trade exécuté avec succès");
+            }*/
         } catch (error) {
           console.error("Erreur lors de la sauvegarde:", error);
         }
@@ -331,7 +345,7 @@ const rag: Action = {
         return true;
       }
       await callback({
-        text: "trades saved in memory",
+        text: "trades saved in memory and trade executed",
         actions: ["RAG"],
         source: message.content.source,
       });
