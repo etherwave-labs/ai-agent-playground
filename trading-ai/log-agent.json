@@ -28,5 +28,180 @@
     "date": "2025-07-08T17:23:12.358Z",
     "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel. Prix à $108,765, balance de 650.50 USDC disponible. Les news montrent des signaux mixtes mais plutôt positifs. Je vais générer un trade long avec un sentiment de 75%.",
     "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$108765"
+  },
+  {
+    "date": "2025-07-08T18:19:21.450Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. J'ai déjà un trade long ouvert (ID: 1751995391826) avec 75% de sentiment. Le prix BTC actuel ($109,081) est au-dessus du stop loss ($107,500) et proche du take profit ($110,500). Je dois maintenir ce trade existant car il respecte les critères demandés.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$109081"
+  },
+  {
+    "date": "2025-07-08T18:22:14.358Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel à $109,089 et déterminer si les conditions sont favorables pour un long. Avec un sentiment élevé requis, je vais créer un trade long optimiste.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$111500, sentiment:75%, prixBTC:$109089"
+  },
+  {
+    "date": "2025-07-09T11:03:54.380Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je vois qu'il y a déjà un trade long ouvert (ID: 1751998933816) avec 75% de sentiment. Le prix BTC actuel est $108,891, ce qui est au-dessus du stop loss ($107,500) mais en dessous du take profit ($111,500). Je dois maintenir ce trade existant car il respecte les critères demandés.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$111500, sentiment:75%, prixBTC:$108891"
+  },
+  {
+    "date": "2025-07-09T11:04:38.992Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier s'il n'y a pas de trade en cours, et générer un signal de trading selon le format requis. Le prix BTC est à $108,891 et j'ai 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$108891"
+  },
+  {
+    "date": "2025-07-09T11:07:52.927Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $108,924 et évaluer si les conditions sont favorables pour un long. Avec un balance de 650.50 USDC et aucun trade actif, je peux procéder si le sentiment est suffisant.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$108924"
+  },
+  {
+    "date": "2025-07-09T11:17:18.467Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel à $108,982 et générer un trade long approprié avec les paramètres requis.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$108982"
+  },
+  {
+    "date": "2025-07-09T11:25:45.142Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel à $109,048 et générer un trade long si les conditions sont favorables. Pas de trade actif actuellement.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$111000, sentiment:75%, prixBTC:$109048"
+  },
+  {
+    "date": "2025-07-09T11:33:08.973Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel à $109,052 et évaluer si les conditions sont favorables pour un long. Avec un balance de 650.50 USDC et aucun trade actif, je peux procéder à l'analyse.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$111000, sentiment:75%, prixBTC:$109052"
+  },
+  {
+    "date": "2025-07-09T11:40:01.956Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel. Prix à $109,078, pas de trade actif, balance de 650.50 USDC. Les news semblent positives avec Emirates/Crypto.com et Ripple/BNY Mellon. Je vais générer un trade long avec un sentiment élevé.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$111000, sentiment:75%, prixBTC:$109078"
+  },
+  {
+    "date": "2025-07-09T11:57:08.989Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable. Prix BTC à $109,116, balance de 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$111500, sentiment:75%, prixBTC:$109116"
+  },
+  {
+    "date": "2025-07-09T12:02:28.865Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $109,077 et générer un trade long approprié avec les paramètres requis.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$111000, sentiment:75%, prixBTC:$109077"
+  },
+  {
+    "date": "2025-07-09T12:13:19.904Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable. Prix BTC à $109,152, balance de 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$111500, sentiment:75%, prixBTC:$109152"
+  },
+  {
+    "date": "2025-07-09T12:16:35.272Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable.",
+    "message": "trade:long, allocation:$200, stoploss:$108500, takeprofit:$110500, sentiment:75%, prixBTC:$109254"
+  },
+  {
+    "date": "2025-07-09T12:20:55.752Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel. Le prix est à $109,360 et j'ai $650.50 USDC disponible. Les news montrent un sentiment plutôt positif avec des articles sur la continuation du bull run Bitcoin et des signaux haussiers. Je vais créer un trade long avec un sentiment de 75%.",
+    "message": "trade:long, allocation:$500, stoploss:$107000, takeprofit:$112000, sentiment:75%, prixBTC:$109360"
+  },
+  {
+    "date": "2025-07-09T12:27:20.842Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel. Le prix est à $109,453 et j'ai 650.50 USDC disponible. Je vais évaluer les conditions pour un trade long avec un sentiment bullish élevé.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$112000, sentiment:75%, prixBTC:$109453"
+  },
+  {
+    "date": "2025-07-09T12:32:22.360Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $109,488 et évaluer si les conditions sont favorables pour un long. Avec un sentiment élevé requis, je vais générer un trade long si les conditions sont réunies.",
+    "message": "trade:long, allocation:$200, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109488"
+  },
+  {
+    "date": "2025-07-09T12:35:19.214Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel. Prix à $109,492, balance de 650.50 USDC disponible. Aucun trade actif. Je vais générer un trade long avec les paramètres appropriés.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109492"
+  },
+  {
+    "date": "2025-07-09T12:37:04.587Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier s'il n'y a pas de trade en cours, et générer un trade long si les conditions sont favorables. Le prix BTC est à $109,498 et j'ai 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109498"
+  },
+  {
+    "date": "2025-07-09T12:42:49.557Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable. Prix BTC à $109,512, balance de 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109512"
+  },
+  {
+    "date": "2025-07-09T13:07:33.343Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel à $109,434 et générer un trade long approprié avec les paramètres requis.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$112000, sentiment:75%, prixBTC:$109434"
+  },
+  {
+    "date": "2025-07-09T13:12:12.258Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $109,623 et générer un trade long si les conditions sont favorables. Mon sentiment doit être supérieur à 70% pour ce trade.",
+    "message": "trade:long, allocation:$200, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109623"
+  },
+  {
+    "date": "2025-07-09T13:22:44.845Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier s'il n'y a pas de trade actif, et générer un signal de trading selon le format requis. Le prix BTC est à $109,701 et j'ai 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111500, sentiment:75%, prixBTC:$109701"
+  },
+  {
+    "date": "2025-07-09T13:25:22.480Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable. Prix BTC à $109,665, balance de 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111500, sentiment:75%, prixBTC:$109665"
+  },
+  {
+    "date": "2025-07-09T13:30:38.922Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $109,620 et générer un trade long approprié avec les paramètres requis.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111500, sentiment:75%, prixBTC:$109620"
+  },
+  {
+    "date": "2025-07-09T13:38:22.457Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. J'ai déjà un trade long actif (ID: 1752067835543) avec sentiment 75% et le prix BTC est à $109,535, ce qui est au-dessus du stop loss ($108,500) mais en dessous du take profit ($111,500). Je dois maintenir ce trade existant car il respecte les critères demandés.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111500, sentiment:75%, prixBTC:$109535"
+  },
+  {
+    "date": "2025-07-09T13:39:23.192Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $109,535 et évaluer si les conditions sont favorables pour un long. Avec un balance de 650.50 USDC et aucun trade actif, je peux procéder à l'analyse.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109535"
+  },
+  {
+    "date": "2025-07-09T13:41:21.261Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $109,505 et générer un trade long si les conditions sont favorables. Pas de trade actif actuellement.",
+    "message": "trade:long, allocation:$200, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109505"
+  },
+  {
+    "date": "2025-07-09T13:43:47.942Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable. Prix BTC à $109,476, balance de 650.50 USDC disponible.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109476"
+  },
+  {
+    "date": "2025-07-09T13:49:19.563Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. J'ai déjà un trade long ouvert (ID: 1752068624537) avec sentiment 75% et stop à $108500, target à $111000. Le prix BTC actuel est $109454, donc au-dessus du stop loss. Je dois maintenir ce trade existant car il respecte les critères demandés.",
+    "message": "trade:long, allocation:$300, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109454"
+  },
+  {
+    "date": "2025-07-09T13:52:00.623Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable.",
+    "message": "trade:long, allocation:$200, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109480"
+  },
+  {
+    "date": "2025-07-09T14:26:37.789Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. J'ai déjà un trade long ouvert (ID: 1752069117072) avec sentiment 75% et le prix BTC actuel ($109,348) est au-dessus du stop loss ($108,500) mais en dessous du take profit ($111,000). Je dois maintenir ce trade existant car il respecte les critères demandés.",
+    "message": "trade:long, allocation:$200, stoploss:$108500, takeprofit:$111000, sentiment:75%, prixBTC:$109348"
+  },
+  {
+    "date": "2025-07-09T14:32:40.775Z",
+    "thoughts": "L'utilisateur demande un trade long avec un sentiment > 70%. Je dois analyser le marché BTC actuel à $109,194 et évaluer si les conditions sont favorables pour un long. Avec les nouvelles positives sur l'adoption institutionnelle et les développements crypto, le sentiment semble bullish.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$111500, sentiment:75%, prixBTC:$109194"
+  },
+  {
+    "date": "2025-07-09T14:35:18.790Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $109,049 et évaluer si les conditions sont favorables pour un long. Avec les nouvelles positives sur l'adoption institutionnelle et les réserves Binance, le sentiment semble bullish.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$111000, sentiment:75%, prixBTC:$109049"
+  },
+  {
+    "date": "2025-07-09T14:41:37.697Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel à $108,791 et générer un trade long si les conditions sont favorables. Avec les nouvelles positives sur l'adoption institutionnelle et la résilience du Bitcoin, le sentiment semble favorable.",
+    "message": "trade:long, allocation:$200, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$108791"
+  },
+  {
+    "date": "2025-07-09T14:50:13.926Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable. Prix BTC à $108,682, pas de trade actif actuellement.",
+    "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$108682"
   }
 ]

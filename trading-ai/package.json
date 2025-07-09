@@ -27,8 +27,8 @@
     "dist"
   ],
   "dependencies": {
-    "@elizaos/cli": "1.0.17",
-    "@elizaos/core": "1.0.17",
+    "@elizaos/cli": "^1.1.0",
+    "@elizaos/core": "latest",
     "@elizaos/plugin-anthropic": "1.0.3",
     "@elizaos/plugin-bootstrap": "1.0.15",
     "@elizaos/plugin-local-ai": "1.0.5",
@@ -42,6 +42,7 @@
     "cron": "^4.3.1",
     "ethers": "^6.15.0",
     "ffmpeg-static": "^5.2.0",
+    "hyperliquid": "^1.7.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^2.6.0",
