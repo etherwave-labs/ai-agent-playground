@@ -35,7 +35,7 @@ interface ClearinghouseState {
 const hyperliquidBalanceProvider: Provider = {
   name: "getBalanceHyperLiquid",
   description:
-    "Injecte la valeur de compte Hyperliquid testnet ainsi que la position perp BTC dans le contexte de l'agent pour les décisions de trading",
+    "Expose uniquement les positions perp BTC ouvertes sur Hyperliquid testnet pour guider les décisions de trading",
   position: 2,
 
   get: async () => {
@@ -74,10 +74,14 @@ const hyperliquidBalanceProvider: Provider = {
       const accountValue = Number(perpState.marginSummary?.accountValue || 0);
       const withdrawable = Number(perpState.withdrawable || 0);
 
-      const btcPos = perpState.assetPositions?.find(
+      const btcPositions = (perpState.assetPositions ?? []).filter(
         (p: any) => p.position.coin.toUpperCase() === "BTC"
       );
-      const btcPerp = btcPos ? parseFloat(btcPos.position.szi) : 0;
+
+      const btcPerp = btcPositions.reduce(
+        (acc: number, pos: any) => acc + parseFloat(pos.position.szi),
+        0
+      );
       
       let spotBalance = 0;
       if (spotClearinghouse && spotClearinghouse.balances) {
@@ -85,21 +89,30 @@ const hyperliquidBalanceProvider: Provider = {
         spotBalance = usdcSpot ? Number(usdcSpot.total || 0) : 0;
       }
       
-      const totalBalance = spotBalance + accountValue + withdrawable;
-      console.log("✅ Balance calculée:", { spotBalance, accountValue, withdrawable, btcPerp, totalBalance });
+      console.log("✅ Positions BTC récupérées:", { btcPositions: btcPositions.length, btcPerp });
+
+      const btcDesc = btcPositions.length
+        ? btcPositions
+            .map((p: any, idx: number) => {
+              const sz = parseFloat(p.position.szi);
+              const side = sz > 0 ? "long" : "short";
+              const lev = p.position.leverage?.value ?? "?";
+              const mode = p.position.leverage?.type ?? "";
+              return `#${idx + 1} ${side} ${Math.abs(sz)} BTC @ ${p.position.entryPx} (levier ${lev}x ${mode})`;
+            })
+            .join(" | ")
+        : "Aucune position perp BTC ouverte";
 
       return {
-        text: `📊 Hyperliquid (testnet) : ${totalBalance.toFixed(
-          2
-        )} USDC total (spot: ${spotBalance.toFixed(2)}, margin: ${accountValue.toFixed(2)}, withdrawable: ${withdrawable.toFixed(2)}), position perp BTC : ${btcPerp} BTC`,
-        values: { accountValue: totalBalance, withdrawable, btcPerp, spotBalance },
-        data: { spot: spotClearinghouse, perp: perpState },
+        text: `📈 Positions perp BTC: ${btcDesc}`,
+        values: { btcPerp, btcPositions: btcPositions.length },
+        data: { positions: btcPositions },
       };
     } catch (error) {
       console.error("❌ Erreur API Hyperliquid:", error);
       return {
         text: `Erreur lors de la récupération de la balance Hyperliquid: ${error.message}`,
-        values: { accountValue: 0, withdrawable: 0, btcPerp: 0 },
+        values: { btcPerp: 0, btcPositions: 0 },
         data: { error: error.message },
       };
     }

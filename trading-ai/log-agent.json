@@ -203,5 +203,159 @@
     "date": "2025-07-09T14:50:13.926Z",
     "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel, vérifier les conditions et générer un trade long si le sentiment est favorable. Prix BTC à $108,682, pas de trade actif actuellement.",
     "message": "trade:long, allocation:$300, stoploss:$107500, takeprofit:$110500, sentiment:75%, prixBTC:$108682"
+  },
+  {
+    "date": "2025-07-10T10:48:05.916Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel. Prix à $111,031, pas de position active, balance de 650.52 USDC. Les news sont plutôt positives avec des prédictions bullish. Je vais créer un trade long avec un sentiment élevé.",
+    "message": "trade:long, allocation:$300, stoploss:$109500, takeprofit:$113500, sentiment:75%, prixBTC:$111031"
+  },
+  {
+    "date": "2025-07-10T11:05:20.051Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. J'ai déjà un trade long ouvert (ID: 1752144481080) avec sentiment 75% et le prix BTC actuel ($111,074) est au-dessus du stop loss ($109,500) mais en dessous du take profit ($113,500). Je dois maintenir ce trade existant car il respecte les critères demandés.",
+    "message": "trade:long, allocation:$300, stoploss:$109500, takeprofit:$113500, sentiment:75%, prixBTC:$111074, leverage:3"
+  },
+  {
+    "date": "2025-07-10T11:06:38.333Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel. Prix à $111,074, pas de position active, balance de 650.23 USDC. Les news semblent plutôt positives avec des mentions de bull run. Je vais générer un trade long avec un sentiment de 75%.",
+    "message": "trade:long, allocation:$300, stoploss:$109500, takeprofit:$113000, sentiment:75%, prixBTC:$111074, leverage:2"
+  },
+  {
+    "date": "2025-07-10T11:21:13.868Z",
+    "thoughts": "L'utilisateur demande un trade long avec sentiment > 70%. Je dois analyser le marché BTC actuel. Prix à $111,122, pas de position active, balance de 649.95 USDC. Les news semblent positives avec des achats institutionnels. Je vais créer un trade long avec un sentiment de 75%.",
+    "message": "trade:long, allocation:$300, stoploss:$109500, takeprofit:$113500, sentiment:75%, prixBTC:$111122, leverage:2"
+  },
+  {
+    "date": "2025-07-10T11:33:28.259Z",
+    "thoughts": "L'utilisateur demande un trade short avec un sentiment > 70%. Je dois analyser les conditions actuelles : BTC à $111,158, pas de position ouverte, sentiment du marché semble baissier selon les news mixtes. Je vais générer un trade short avec les paramètres appropriés.",
+    "message": "trade:short, allocation:$300, stoploss:$112500, takeprofit:$109000, sentiment:75%, prixBTC:$111158, leverage:2"
+  },
+  {
+    "date": "2025-07-10T11:39:24.800Z",
+    "thoughts": "L'utilisateur demande un trade short avec un sentiment > 70%. Je dois analyser le marché BTC actuel. Le prix est à $111,129 et je n'ai aucune position ouverte. Je vais générer un trade short avec les paramètres appropriés.",
+    "message": "trade:short, allocation:$50, stoploss:$113500, takeprofit:$108000, sentiment:75%, prixBTC:$111129, leverage:3"
+  },
+  {
+    "date": "2025-07-10T11:47:33.294Z",
+    "thoughts": "L'utilisateur demande un trade short avec un sentiment > 70%. Je dois analyser le marché BTC actuel et générer un trade short si les conditions sont favorables. Le prix BTC est à $111,112 et les news semblent plutôt positives, mais je vais évaluer techniquement.",
+    "message": "trade:short, allocation:$50, stoploss:$113500, takeprofit:$108000, sentiment:75%, prixBTC:$111112, leverage:3"
+  },
+  {
+    "date": "2025-07-10T11:49:35.632Z",
+    "thoughts": "L'utilisateur demande un trade short avec un sentiment > 70%. Je dois d'abord analyser les données de marché actuelles, puis générer un trade approprié selon mes règles.",
+    "message": "trade:short, allocation:$50, stoploss:$113000, takeprofit:$108000, sentiment:75%, prixBTC:$111115, leverage:3"
+  },
+  {
+    "date": "2025-07-10T11:51:19.342Z",
+    "thoughts": "L'utilisateur veut annuler le trade en cours. Je vois qu'il y a une position short de 0.00045 BTC avec un levier 3x. Pour l'annuler, je dois placer un ordre long de même taille et même leverage.",
+    "message": "Je vais annuler ton trade short en cours en plaçant un ordre long équivalent.\n\ntrade:long, allocation:$50, stoploss:$110000, takeprofit:$112000, sentiment:50%, prixBTC:$111114, leverage:3"
+  },
+  {
+    "date": "2025-07-10T11:52:24.603Z",
+    "thoughts": "L'utilisateur veut annuler le trade en cours. Je vois qu'il y a une position short de 0.00045 BTC avec un levier 3x. Pour l'annuler, je dois placer un ordre long de même taille et même leverage.",
+    "message": "trade:long, allocation:$50, stoploss:$110000, takeprofit:$112000, sentiment:75%, prixBTC:$111108, leverage:3"
+  },
+  {
+    "date": "2025-07-10T12:01:23.958Z",
+    "thoughts": "L'utilisateur demande une analyse en temps réel du marché BTC. Le prix est à $111,064 avec une hausse récente vers $112,000 selon les news. Pas de position ouverte actuellement. Je dois analyser le sentiment et décider si c'est un bon moment pour entrer en position ou attendre.",
+    "message": "sentiment:65%, allocation:$80, stoploss:$109500, takeprofit:$113500, prixBTC:$111064, leverage:3"
+  },
+  {
+    "date": "2025-07-10T12:29:18.352Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec format strict. Prix actuel $110,854, pas de position ouverte, articles montrent momentum positif avec nouveau ATH. Sentiment bullish justifié.",
+    "message": "sentiment:78%, allocation:$100, stoploss:$109500, takeprofit:$112500, prixBTC:$110854, leverage:3"
+  },
+  {
+    "date": "2025-07-10T12:45:23.650Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec format strict. Prix actuel $110,881, pas de position ouverte. Articles récents montrent momentum positif avec BTC près de $110k, ETFs avec $50B d'inflows. Sentiment bullish justifié.",
+    "message": "sentiment:78%, allocation:$100, stoploss:$109500, takeprofit:$112500, prixBTC:$110881, leverage:5"
+  },
+  {
+    "date": "2025-07-10T13:00:17.390Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec le format strict. Je vois que j'ai déjà une position long ouverte (0.0009 BTC @ 110805 avec levier 5x). Le prix actuel est $110,858, donc légèrement en profit. Les news sont plutôt positives avec Bitcoin qui approche $112k et une demande institutionnelle forte. Cependant, j'ai déjà une position ouverte, donc je dois soit la maintenir (sentiment wait) soit la fermer avec un ordre inverse.",
+    "message": "sentiment:45%, allocation:$100, stoploss:$109500, takeprofit:$112000, prixBTC:$110858, leverage:5"
+  },
+  {
+    "date": "2025-07-10T13:15:17.317Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec format strict. J'ai une position long ouverte (0.0009 BTC @ 110805 avec levier 5x). Le prix actuel est $110,896, soit légèrement au-dessus de mon prix d'entrée. Les news sont plutôt positives (BlackRock ajoute $126M, adoption corporate record). Avec la Fed qui pourrait baisser les taux, le sentiment reste bullish mais je dois attendre car j'ai déjà une position ouverte.",
+    "message": "sentiment:65%, allocation:$100, stoploss:$109500, takeprofit:$112500, prixBTC:$110896, leverage:5"
+  },
+  {
+    "date": "2025-07-10T13:30:10.155Z"
+  },
+  {
+    "date": "2025-07-10T13:45:26.513Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec format strict. Prix actuel $110,772. Pas de position ouverte. News plutôt positives avec XRP qui surge et mentions de BTC pouvant atteindre $250k-350k. Sentiment bullish modéré.",
+    "message": "sentiment:75%, allocation:$100, stoploss:$109500, takeprofit:$112500, prixBTC:$110772, leverage:5"
+  },
+  {
+    "date": "2025-07-10T14:00:18.623Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec le format strict. J'ai une position long ouverte de 0.0009 BTC à 110795 avec leverage 5x. Le prix actuel est 110798, donc légèrement en profit. Les news sont plutôt positives avec un nouvel ATH Bitcoin et des flux entrants dans les ETF. Je vais maintenir ma position existante avec un sentiment neutre-haut.",
+    "message": "sentiment:65%, allocation:$100, stoploss:$109500, takeprofit:$112000, prixBTC:$110798, leverage:5"
+  },
+  {
+    "date": "2025-07-10T14:15:25.304Z",
+    "thoughts": "L'utilisateur demande une analyse BTC en temps réel. J'ai une position long ouverte de 0.0009 BTC à 110795 avec leverage 5x. Le prix actuel est 111010, donc en profit. Les news sont plutôt positives avec des développements sur Ethereum et des stratégies Bitcoin d'entreprises. Je vais maintenir un sentiment bullish modéré.",
+    "message": "sentiment:75%, allocation:$100, stoploss:$110500, takeprofit:$111500, prixBTC:$111010, leverage:5"
+  },
+  {
+    "date": "2025-07-10T14:30:22.674Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec format strict. J'ai une position long ouverte (0.0018 BTC @ 110931 avec 5x leverage). BTC est à ATH ($110,998), news très bullish (Trump, MicroStrategy profits, nouveaux ATH). Je dois analyser si maintenir/augmenter la position ou prendre profits.",
+    "message": "sentiment:85%, allocation:$100, stoploss:$109500, takeprofit:$112500, prixBTC:$110998, leverage:5"
+  },
+  {
+    "date": "2025-07-10T14:45:22.795Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec le format strict. Je vois que BTC est à $111,149 avec des nouvelles plutôt positives (ETF inflows, adoption USDC). Aucune position ouverte actuellement. Je vais analyser et donner un sentiment bullish modéré.",
+    "message": "sentiment:75%, allocation:$80, stoploss:$109500, takeprofit:$113000, prixBTC:$111149, leverage:3"
+  },
+  {
+    "date": "2025-07-10T15:00:15.763Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec le format strict. J'ai une position long ouverte (0.00072 BTC @ 111072 avec leverage 3x). Le prix actuel est $111,212, donc légèrement en profit. Les news sont plutôt positives avec Trump supportant crypto et prédictions bullish. Je vais maintenir ma position avec sentiment neutre pour ne pas modifier l'allocation.",
+    "message": "sentiment:50%, allocation:$80, stoploss:$110500, takeprofit:$111800, prixBTC:$111212, leverage:3"
+  },
+  {
+    "date": "2025-07-10T15:15:18.957Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec le format strict. J'ai une position long ouverte de 0.00072 BTC à 111072 avec leverage 3x. Le prix actuel est 111184, donc légèrement en profit. Vu que j'ai déjà une position, je dois soit la maintenir (sentiment 50%) soit l'ajuster. Les news semblent neutres à légèrement positives. Je vais maintenir avec sentiment 50%.",
+    "message": "sentiment:50%, allocation:$80, stoploss:$110500, takeprofit:$111800, prixBTC:$111184, leverage:3"
+  },
+  {
+    "date": "2025-07-11T10:23:53.585Z"
+  },
+  {
+    "date": "2025-07-11T10:24:29.916Z",
+    "thoughts": "L'utilisateur demande une analyse BTC en temps réel avec le format spécifique. Je vois que BTC est à $118,173 et qu'il n'y a aucune position ouverte. Les news montrent un mix d'actualités crypto avec du retour de fonds hackés et des discussions sur la dominance Bitcoin. Je vais analyser et donner un sentiment modérément bullish vu le prix élevé mais stable.",
+    "message": "sentiment:75%, allocation:$80, stoploss:$117500, takeprofit:$119000, prixBTC:$118173, leverage:3"
+  },
+  {
+    "date": "2025-07-11T10:27:58.544Z",
+    "thoughts": "L'utilisateur demande une analyse BTC en temps réel. Je vois que j'ai déjà une position long de 0.00068 BTC à 118203 avec un levier 3x. Le prix actuel est 118211. Vu que j'ai déjà une position ouverte et que le prix est légèrement au-dessus de mon prix d'entrée, je vais maintenir un sentiment neutre pour ne pas modifier ma position actuelle.",
+    "message": "sentiment:50%, allocation:$50, stoploss:$117500, takeprofit:$119000, prixBTC:$118211, leverage:3"
+  },
+  {
+    "date": "2025-07-11T11:10:12.616Z",
+    "thoughts": "L'utilisateur demande une analyse BTC en temps réel. J'ai une position long ouverte de 0.00068 BTC à 118203 avec leverage 3x. Le prix actuel est 118018, donc légèrement en perte. Les news sont plutôt bullish avec des prédictions à 120K et 250K. Je vais maintenir un sentiment neutre pour ne pas modifier ma position actuelle.",
+    "message": "sentiment:50%, allocation:$50, stoploss:$116500, takeprofit:$119500, prixBTC:$118018, leverage:3"
+  },
+  {
+    "date": "2025-07-11T11:17:31.011Z",
+    "thoughts": "L'utilisateur demande une analyse BTC en temps réel. J'ai une position long ouverte de 0.00068 BTC à 118203 avec un PnL de -0.34 USDC. Le prix actuel est 117863, donc en légère baisse. Les news sont plutôt bullish avec Bitcoin qui approche les 120k. Vu que j'ai déjà une position et que le marché est mitigé, je vais opter pour un sentiment d'attente à 50% pour ne pas modifier ma position actuelle.",
+    "message": "sentiment:50%, allocation:$80, stoploss:$116500, takeprofit:$119500, prixBTC:$117863, leverage:3"
+  },
+  {
+    "date": "2025-07-11T13:27:12.368Z",
+    "thoughts": "L'utilisateur demande une analyse stricte au format requis. Avec RSI en surachat >70, sentiment baissier, volatilité faible et une position long déjà ouverte, je dois analyser si je maintiens, ferme ou inverse. Le prix est à $117,717 vs position à $118,203, donc légèrement en perte. Vu le RSI surachat et sentiment baissier, je vais proposer un sentiment bearish pour shorter et potentiellement inverser la position.",
+    "message": "sentiment:25%, allocation:$80, stoploss:$118500, takeprofit:$116800, prixBTC:$117717, leverage:3"
+  },
+  {
+    "date": "2025-07-11T13:43:49.239Z"
+  },
+  {
+    "date": "2025-07-11T14:07:19.679Z",
+    "thoughts": "L'utilisateur demande une analyse BTC avec le format strict. Selon les données: RSI en surachat (>70), sentiment baissier, volatilité faible, prix à $117,856. RSI surachat + sentiment baissier = conditions bearish. Je vais proposer un short avec sentiment 25%.",
+    "message": "sentiment:25%, allocation:$50, stoploss:$119000, takeprofit:$116500, prixBTC:$117856, leverage:3"
+  },
+  {
+    "date": "2025-07-11T14:18:21.021Z",
+    "thoughts": "L'utilisateur demande un bilan de ses performances et des frais de trading. Je dois analyser les données disponibles pour lui donner un résumé complet de ses trades et performances.",
+    "message": "Voici ton bilan de performances :\n\n📊 **Position actuelle:**\n- Short BTC: 0.00042 BTC @ $118,022 (3x leverage)\n- PnL en cours: +0.06 USDC\n\n💰 **Performance globale:**\n- PnL total: +0.06 USDC (position en cours)\n- 2 ordres ouverts sur Hyperliquid\n\n📈 **Contexte marché:**\n- BTC à $117,894 (en baisse depuis ton entry)\n- Ton short est légèrement profitable\n- RSI en surachat, sentiment baissier confirmé\n\nPour les frais détaillés et l'historique complet, je n'ai pas accès aux données historiques complètes. Tu peux checker directement sur Hyperliquid dans l'onglet \"History\" pour voir tous tes frais de trading depuis le début."
   }
 ]

@@ -8,6 +8,7 @@ interface Trade {
   stoploss: number;       // en $
   takeprofit: number;     // en $
   sentiment: number;      // en %
+  leverage?: number;      // levier isolé (optionnel)
   id?: number;            // optionnel
   timestamp?: string;     // optionnel
   state?: string;         // optionnel
@@ -15,7 +16,7 @@ interface Trade {
 
 function extractLastTrade(runtime: IAgentRuntime, currentText?: string): Trade | null {
   const TRADE_REGEX =
-  /trade:\s*(?<trade>long|wait|short)\s*,\s*allocation:\s*\$?(?<allocation>\d+(?:\.\d+)?)(?:%)?\s*,\s*stoploss:\s*\$(?<stoploss>\d+(?:\.\d+)?)\s*,\s*takeprofit:\s*\$(?<takeprofit>\d+(?:\.\d+)?)\s*,\s*sentiment:\s*(?<sentiment>\d+(?:\.\d+)?)%(?:\s*,\s*prixBTC:\s*\$(?<prixBTC>\d+(?:\.\d+)?))?(?:\s*,\s*id:\s*(?<id>\d+))?/gi;
+  /trade:\s*(?<trade>long|wait|short)\s*,\s*allocation:\s*\$?(?<allocation>\d+(?:\.\d+)?)(?:%)?\s*,\s*stoploss:\s*\$(?<stoploss>\d+(?:\.\d+)?)\s*,\s*takeprofit:\s*\$(?<takeprofit>\d+(?:\.\d+)?)\s*,\s*sentiment:\s*(?<sentiment>\d+(?:\.\d+)?)%(?:\s*,\s*prixBTC:\s*\$(?<prixBTC>\d+(?:\.\d+)?))?(?:\s*,\s*leverage:\s*(?<leverage>\d+(?:\.\d+)?))?(?:\s*,\s*id:\s*(?<id>\d+))?/gi;
 
   let lastMatch: RegExpMatchArray | null = null;
 
@@ -43,7 +44,7 @@ function extractLastTrade(runtime: IAgentRuntime, currentText?: string): Trade |
 
   if (!lastMatch || !lastMatch.groups) return null;
 
-  const { trade, allocation, stoploss, takeprofit, sentiment, id } = lastMatch.groups;
+  const { trade, allocation, stoploss, takeprofit, sentiment, leverage, id } = lastMatch.groups;
 
   const result: Trade = {
     trade: trade as 'long' | 'wait' | 'short',
@@ -55,6 +56,10 @@ function extractLastTrade(runtime: IAgentRuntime, currentText?: string): Trade |
 
   if (id) {
     result.id = Number(id);
+  }
+
+  if (leverage) {
+    result.leverage = Number(leverage);
   }
   
   return result;
@@ -294,7 +299,8 @@ const rag: Action = {
             existingTrade.allocation === trade.allocation &&
             existingTrade.stoploss === trade.stoploss &&
             existingTrade.takeprofit === trade.takeprofit &&
-            existingTrade.sentiment === trade.sentiment
+            existingTrade.sentiment === trade.sentiment &&
+            (existingTrade.leverage ?? 0) === (trade.leverage ?? 0)
           );
           
           if (isDuplicate) {
@@ -320,6 +326,7 @@ const rag: Action = {
             tp: trade.takeprofit.toString(),
             sl: trade.stoploss.toString(),
             isTestnet: true,
+            leverage: trade.leverage,
           });
 
           trades.push(newTrade);

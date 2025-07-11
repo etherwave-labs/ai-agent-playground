@@ -6,6 +6,7 @@ export interface TradeHyperliquid {
   tp:        string;               // prix TP
   sl:        string;               // prix SL
   isTestnet: boolean;              // testnet = true
+  leverage?: number;               // effet de levier isolé (ex: 3, 5, 10)
 }
 
 const roundToTickSize = (price: number, tickSize: number): number => {
@@ -21,7 +22,7 @@ const getBtcUsd = async (): Promise<number> => {
 };
 
 export const placeOrder = async (p: TradeHyperliquid) => {
-  const { sizeUsd, side, tp, sl, isTestnet } = p;
+  const { sizeUsd, side, tp, sl, isTestnet, leverage } = p;
 
   const pk = process.env.HYPERLIQUID_PRIVKEY;
   if (!pk) throw new Error("HYPERLIQUID_PRIVKEY manquante");
@@ -49,6 +50,22 @@ export const placeOrder = async (p: TradeHyperliquid) => {
 
     console.log('SDK Hyperliquid initialisé avec succès');
 
+    // ----------------------------------------------------------------------
+    // Configuration du levier isolé si demandé
+    // ----------------------------------------------------------------------
+    if (leverage && leverage > 0) {
+      try {
+        console.log(`⚙️  Configuration du levier isolé à x${leverage}`);
+        // Signature attendue : (coin, mode, leverage)
+        await (sdk.exchange as any).updateLeverage('BTC-PERP', 'isolated', leverage);
+        console.log('✅ Levier mis à jour');
+      } catch (levErr) {
+        console.error('❌ Erreur lors de la mise à jour du levier:', levErr);
+        // on continue malgré tout : l ’ordre sera placé avec le levier courant
+      }
+    }
+
+    // ensuite tu places l’ordre
     const orderResult = await sdk.exchange.placeOrder({
       coin: 'BTC-PERP',
       is_buy: isBuy,
@@ -76,8 +93,66 @@ export const placeOrder = async (p: TradeHyperliquid) => {
       }
     }
     
+    // ----------------------------------------------------------------------
+    // Placement éventuel des ordres Take-Profit / Stop-Loss
+    // ----------------------------------------------------------------------
     if (tp || sl) {
-      console.log('TODO: Implémenter les ordres TP/SL séparément');
+      try {
+        const tpslPromises: Promise<unknown>[] = [];
+
+        // Les ordres TP/SL sont toujours en sens inverse de la position
+        const exitSideIsBuy = !isBuy;
+
+        if (tp) {
+          console.log(`📈 Placement TP (take-profit) à ${tp}`);
+          tpslPromises.push(
+            sdk.exchange.placeOrder({
+              coin: "BTC-PERP",
+              is_buy: exitSideIsBuy,
+              sz: sizeBtc,
+              reduce_only: true,
+              limit_px: tp,
+              order_type: {
+                trigger: {
+                  isMarket: true,
+                  triggerPx: tp,
+                  tpsl: "tp",
+                },
+              },
+            })
+          );
+        }
+
+        if (sl) {
+          console.log(`🛡️  Placement SL (stop-loss) à ${sl}`);
+          tpslPromises.push(
+            sdk.exchange.placeOrder({
+              coin: "BTC-PERP",
+              is_buy: exitSideIsBuy,
+              sz: sizeBtc,
+              reduce_only: true,
+              limit_px: sl,
+              order_type: {
+                trigger: {
+                  isMarket: true,
+                  triggerPx: sl,
+                  tpsl: "sl",
+                },
+              },
+            })
+          );
+        }
+
+        const tpslResults = await Promise.all(tpslPromises);
+        tpslResults.forEach((res, idx) => {
+          console.log(
+            `✅ Réponse ordre ${idx + 1} (TP/SL):`,
+            JSON.stringify(res, null, 2)
+          );
+        });
+      } catch (tpslError) {
+        console.error("Erreur lors du placement des ordres TP/SL:", tpslError);
+      }
     }
     
     return orderResult;

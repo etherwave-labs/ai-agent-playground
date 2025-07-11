@@ -1,73 +1,54 @@
+import cron from "node-cron";
+import axios from "axios";
 
-import cron from 'node-cron';
+const BASE = "http://localhost:3000/api/messaging";
 
-import axios, { AxiosError } from "axios";
+const SERVER_ZERO = "00000000-0000-0000-0000-000000000000";
 
-const URL =
-  "http://localhost:3000/api/messaging/central-channels/91b0c098-b2c3-44f8-9dbb-f0d3ca2626f4/messages";
+const ME   = "f6a0a8d1-f28d-4538-bdab-5eb0b527430c";
+const BOT  = "49352196-f6d2-0e9b-a5cd-896a96f5119d";
 
-const payload = {
-  author_id: "f6a0a8d1-f28d-4538-bdab-5eb0b527430c",
-  content: `Analyse le marché BTC en temps réel.
-Si tu détectes une opportunité claire d’achat, renvoie UNE SEULE ligne “trade: buy …” au format strict.
-Si tu détectes une opportunité claire de vente, renvoie UNE SEULE ligne “id: x, DELETE” (ou x est l'id du trade a annuler) au format strict.
-Si aucune opportunité n’est jugée assez forte (p. ex. sentiment < 70 %), renvoie UNE SEULE ligne "trade: wait ..." au format strict.`,
-  server_id: "00000000-0000-0000-0000-000000000000",
-  raw_message: {
-    roomId: "91b0c098-b2c3-44f8-9dbb-f0d3ca2626f4",
-    source: "client_chat",
-    message: `Analyse le marché BTC en temps réel.
-Si tu détectes une opportunité claire d’achat, renvoie UNE SEULE ligne “trade: buy …” au format strict.
-Si tu détectes une opportunité claire de vente, renvoie UNE SEULE ligne “id: x, DELETE” (ou x est l'id du trade a annuler) au format strict.
-Si aucune opportunité n’est jugée assez forte (p. ex. sentiment < 70 %), renvoie UNE SEULE ligne "trade: wait ..." au format strict.`,
-    metadata: {
-      isDm: true,
-      channelType: "DM",
-      targetUserId: "49352196-f6d2-0e9b-a5cd-896a96f5119d",
-    },
-    senderId: "f6a0a8d1-f28d-4538-bdab-5eb0b527430c",
-    serverId: "00000000-0000-0000-0000-000000000000",
-    channelId: "91b0c098-b2c3-44f8-9dbb-f0d3ca2626f4",
-    messageId: "00b8ecdb-fc80-4fab-a643-93586b43cf53",
-    senderName: "User-f6a0a8d1",
-  },
-  metadata: {
-    isDm: true,
-    channelType: "DM",
-    targetUserId: "49352196-f6d2-0e9b-a5cd-896a96f5119d",
-  },
-  source_type: "client_chat",
-} as const;
-
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-} as const;
-
-export async function sendMessage(): Promise<void> {
-  try {
-    const resp = await axios.post(URL, payload, {
-      headers,
-      timeout: 10_000,
-    });
-
-    console.log("Message créé :", resp.status);
-    console.dir(resp.data, { depth: null });
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      if (err.response) {
-        console.error(
-          "Erreur HTTP :",
-          err.response.status,
-          err.response.data
-        );
-      } else {
-        console.error("Erreur réseau :", err.message);
-      }
-    } else {
-      console.error("Erreur inconnue :", err);
-    }
-  }
+async function createChannel(): Promise<string> {
+  const res = await axios.post(`${BASE}/central-channels`, {
+    name: `btc-${Date.now()}`,
+    server_id: SERVER_ZERO,
+    participantCentralUserIds: [ME, BOT],
+    type: "DM"
+  });
+  return res.data.data.id as string;
 }
 
-cron.schedule("* * * * *", () => sendMessage());
+async function sendPrompt(roomId: string): Promise<void> {
+  await axios.post(`${BASE}/central-channels/${roomId}/messages`, {
+    author_id: ME,
+    content: `Analyse le marché BTC en temps réel.
+Calcule un sentiment compris entre 0 % et 100 %.
+RENVOIE UNE SEULE LIGNE, SANS AUCUNE EXPLICATION, strictement au format :
+sentiment:X%, allocation:$X, stoploss:$X, takeprofit:$X, prixBTC:$X, leverage:X
+
+Règles :
+1. Achat (bullish) → 70 % ≤ sentiment ≤ 100 %.
+2. Vente (bearish) → 0 % ≤ sentiment < 30 %.
+3. Attente     → 30 % ≤ sentiment ≤ 70 %.
+4. Allocation ≤ 150 USDC et leverage ≤ 10 x.
+5. Pour annuler une position ouverte, envoie une ligne avec un sentiment qui provoquera l’ordre inverse, même allocation & leverage.
+6. Toujours adapter stop-loss et take-profit à un horizon de 15 minutes.
+7. Aucune autre sortie que la ligne au format indiqué.`,
+    source_type: "client_chat",
+    server_id: SERVER_ZERO
+  });
+}
+
+cron.schedule("*/15 * * * *", async () => {
+  try {
+    const id = await createChannel();
+    await sendPrompt(id);
+    console.log("✅ prompt envoyé dans", id);
+  } catch (e: any) {
+    if (e.response) {
+      console.error("HTTP", e.response.status, e.response.data);
+    } else {
+      console.error("❌", e.message);
+    }
+  }
+});

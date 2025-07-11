@@ -1,5 +1,4 @@
 import { Provider, Plugin } from '@elizaos/core';
-import 'dotenv/config';
 
 const BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN;
 if (!BEARER_TOKEN) {
