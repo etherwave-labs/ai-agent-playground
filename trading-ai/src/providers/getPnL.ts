@@ -16,21 +16,23 @@ async function postInfo<T>(payload: unknown): Promise<T> {
 
 type Address = `0x${string}`;
 
-interface AssetPosition {
-  position: {
-    coin: string;
-    unrealizedPnl: string;
-    szi: string;
+interface ApiResponse {
+  assetPositions?: Array<{
+    position: {
+      szi: string;
+      unrealizedPnl: string;
+    };
+  }>;
+  marginSummary?: {
+    accountValue: string;
+    totalMarginUsed: string;
   };
-}
-
-interface ClearinghouseState {
-  assetPositions: AssetPosition[];
+  [key: string]: any;
 }
 
 const pnlProvider: Provider = {
   name: "getPnLHyperLiquid",
-  description: "Récupère les données de PnL (profit and loss) et l'historique de valeur de compte sur Hyperliquid testnet.",
+  description: "Bilan complet des performances de trading sur Hyperliquid testnet.",
   position: 4,
 
   get: async () => {
@@ -40,53 +42,90 @@ const pnlProvider: Provider = {
     if (!userAddr) {
       return {
         text: "L'adresse publique n'est pas définie (env PUBKEY)",
-        values: { totalPnL: 0, currentValue: 0 },
+        values: { currentTradePnL: 0, dailyPnL: 0, weeklyPnL: 0, totalTrades: 0 },
         data: {},
       };
     }
 
     try {
-      console.log("📡 Requête clearinghouseState pour PnL non réalisé", userAddr);
-      const state = await postInfo<ClearinghouseState>({
-        type: "clearinghouseState",
-        user: userAddr,
+      const [state, portfolio, fills] = await Promise.all([
+        postInfo({ type: "clearinghouseState", user: userAddr }),
+        postInfo({ type: "portfolio", user: userAddr }),
+        postInfo({ type: "userFills", user: userAddr })
+      ]);
+
+      const stateData = state as ApiResponse;
+      const portfolioData = portfolio as any;
+      const fillsData = fills as any[] || [];
+
+      const currentPnL = (stateData.assetPositions || [])
+        .reduce((sum: number, pos: any) => sum + parseFloat(pos.position?.unrealizedPnl || "0"), 0);
+
+      const periods = ["day", "week", "month", "allTime"];
+      const pnlData = periods.map(p => {
+        const data = portfolioData[p];
+        if (!data?.pnlHistory || data.pnlHistory.length < 2) return 0;
+        const latest = parseFloat(data.pnlHistory[data.pnlHistory.length - 1][1]);
+        const oldest = parseFloat(data.pnlHistory[0][1]);
+        return latest - oldest;
       });
 
-      if (!state.assetPositions || state.assetPositions.length === 0) {
-        return {
-          text: "📊 Aucune position ouverte.",
-          values: { currentTradePnL: 0 },
-          data: { positions: [] },
-        };
+      const totalTrades = fillsData.length || 0;
+      const winningTrades = fillsData.filter((f: any) => parseFloat(f.closedPnl) > 0).length || 0;
+      const accountValue = parseFloat(stateData.marginSummary?.accountValue || "0");
+      const marginUsed = parseFloat(stateData.marginSummary?.totalMarginUsed || "0");
+
+      let text = "📊 **BILAN DE PERFORMANCE TRADING**\n\n";
+      
+      const positions = (stateData.assetPositions || []).filter(p => parseFloat(p.position?.szi || "0") !== 0);
+      text += "🔄 **POSITIONS ACTUELLES**\n";
+      if (positions.length > 0) {
+        text += `• ${positions.length} position(s) ouverte(s)\n`;
+        text += `• PnL non réalisé: ${currentPnL.toFixed(2)} USDC\n`;
+      } else {
+        text += "• Aucune position ouverte\n";
       }
 
-      let totalUnrealizedPnL = 0;
-      const positionsSummary = state.assetPositions
-        .filter(ap => parseFloat(ap.position.szi) !== 0)
-        .map(ap => {
-          const pnl = parseFloat(ap.position.unrealizedPnl);
-          totalUnrealizedPnL += pnl;
-          return `${ap.position.coin}: PnL ${pnl.toFixed(2)} USDC`;
-        });
+      text += `\n💰 **ÉTAT DU COMPTE**\n`;
+      text += `• Capital: ${accountValue.toFixed(2)} USDC\n`;
+      text += `• Marge utilisée: ${marginUsed.toFixed(2)} USDC\n`;
+      text += `• Disponible: ${(accountValue - marginUsed).toFixed(2)} USDC\n`;
 
-      console.log(`📊 PnL non réalisé total: ${totalUnrealizedPnL}`);
-
-      const pnlSummary = positionsSummary.length
-        ? `💰 PnL trade en cours: ${totalUnrealizedPnL.toFixed(2)} USDC (${positionsSummary.join(' | ')})`
-        : "💰 Aucun PnL trade en cours.";
+      if (totalTrades > 0) {
+        text += `\n📈 **PERFORMANCE**\n`;
+        text += `• Aujourd'hui: ${pnlData[0].toFixed(2)} USDC\n`;
+        text += `• Cette semaine: ${pnlData[1].toFixed(2)} USDC\n`;
+        text += `• Ce mois: ${pnlData[2].toFixed(2)} USDC\n`;
+        text += `• All time: ${pnlData[3].toFixed(2)} USDC\n`;
+        text += `\n📊 **TRADING**\n`;
+        text += `• Trades: ${totalTrades}\n`;
+        text += `• Gagnants: ${winningTrades} (${((winningTrades/totalTrades)*100).toFixed(1)}%)\n`;
+      } else {
+        text += `\n🎯 **PRÊT À COMMENCER**\n`;
+        text += `• Capital disponible: ${accountValue.toFixed(2)} USDC\n`;
+        text += `• Conseils: Analyser le marché, définir une stratégie, commencer petit\n`;
+      }
 
       return {
-        text: pnlSummary,
-        values: { 
-          currentTradePnL: totalUnrealizedPnL,
+        text,
+        values: {
+          currentTradePnL: currentPnL,
+          dailyPnL: pnlData[0],
+          weeklyPnL: pnlData[1],
+          monthlyPnL: pnlData[2],
+          allTimePnL: pnlData[3],
+          totalTrades,
+          winningTrades,
+          accountValue,
+          marginUsed,
         },
-        data: { positions: state.assetPositions },
+        data: { state: stateData, portfolio: portfolioData, fills: fillsData },
       };
     } catch (error) {
-      console.error("❌ Erreur API Hyperliquid PnL:", error);
+      console.error("❌ Erreur API Hyperliquid:", error);
       return {
-        text: `Erreur lors de la récupération du PnL: ${error.message}`,
-        values: { totalPnL: 0, currentValue: 0 },
+        text: `Erreur: ${error.message}`,
+        values: { currentTradePnL: 0, dailyPnL: 0, weeklyPnL: 0, totalTrades: 0 },
         data: { error: error.message },
       };
     }
@@ -95,7 +134,7 @@ const pnlProvider: Provider = {
 
 export const plugin: Plugin = {
   name: "getPnLHyperLiquid",
-  description: "Expose les données de PnL et l'historique de performance Hyperliquid testnet pour l'agent",
+  description: "Bilan complet des performances de trading sur Hyperliquid testnet",
   providers: [pnlProvider],
   priority: 180,
 };
