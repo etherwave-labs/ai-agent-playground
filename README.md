@@ -116,4 +116,4 @@ Il retourne un **sentiment entre 0 et 100** :
 
 ## 📄 Licence
 
-MIT — open source, utilise et modifie librement.
+MIT — open source.
