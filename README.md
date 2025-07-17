@@ -1,7 +1,7 @@
 # 🤖 ElizaOS Trading Bot — Autonomous Crypto Agent
 
 Bot de trading autonome construit avec [ElizaOS](https://github.com/a16z/eliza), le framework d’agents IA développé par a16z.
-Il analyse les marchés crypto, consulte les news, prend des décisions et passe des ordres sur [Hyperliquid](https://hyperliquid.xyz) en toute autonomie.
+Il analyse le BTC, consulte les news, prend des décisions et passe des ordres sur [Hyperliquid](https://hyperliquid.xyz) en toute autonomie.
 
 ---
 
