@@ -32,7 +32,7 @@ Règles :
 3. Attente     → 30 % ≤ sentiment ≤ 70 %.
 4. Allocation ≤ 150 USDC et leverage ≤ 10 x.
 5. Pour annuler une position ouverte, envoie une ligne avec un sentiment qui provoquera l’ordre inverse, même allocation & leverage.
-6. Toujours adapter stop-loss et take-profit à un horizon de 15 minutes.
+6. Toujours adapter stop-loss et take-profit à un horizon de 1h.
 7. Aucune autre sortie que la ligne au format indiqué.`,
     source_type: "client_chat",
     server_id: SERVER_ZERO

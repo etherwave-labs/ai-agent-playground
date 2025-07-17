@@ -30,29 +30,48 @@ import fs from "fs/promises";
                 const url    = `${host}/api/agents/${aid}/logs`;
                 const response = await fetch(url);
                 const data = await response.json() as any;
-                const thoughts = data.data[0].body.response.thought;
-                const message = data.data[0].body.response.message;
-                const all = {
-                    thoughts: thoughts,
-                    message: message,
+                
+                console.log("🔍 Structure complète de la réponse API:", JSON.stringify(data, null, 2));
+                
+                let thoughts = "N/A";
+                let message = "N/A";
+                
+                try {
+                    if (data?.data?.[0]?.body?.response?.thought) {
+                        thoughts = data.data[0].body.response.thought;
+                    }
+                    if (data?.data?.[0]?.body?.response?.message) {
+                        message = data.data[0].body.response.message;
+                    }
+                } catch (parseError) {
+                    console.log("❌ Erreur lors de l'extraction des données:", parseError);
                 }
+                
+                console.log("📝 Thoughts extraites:", thoughts);
+                console.log("📝 Message extrait:", message);
 
                 let tab: any[] = [];
 
-                if (await fs.stat(filename)) {
-                const content = await fs.readFile(filename, 'utf8');
-                if (content) tab = JSON.parse(content);
+                try {
+                    await fs.stat(filename);
+                    const content = await fs.readFile(filename, 'utf8');
+                    if (content) tab = JSON.parse(content);
+                } catch (fileError) {
+                    console.log("📁 Fichier log-agent.json n'existe pas encore, création...");
+                    tab = [];
                 }
 
-                tab.push({
-                date: new Date().toISOString(),
-                thoughts: thoughts,
-                message: message,
-                });
+                const logEntry = {
+                    date: new Date().toISOString(),
+                    thoughts,
+                    message,
+                };
+
+                tab.push(logEntry);
 
                 await fs.writeFile(filename, JSON.stringify(tab, null, 2), 'utf8');
                 await cb({
-                text: `Pensées enregistrées dans log-agent.json`,
+                text: `Pensées enregistrées dans log-agent.json (thoughts: ${thoughts !== "N/A" ? "✅" : "❌"}, message: ${message !== "N/A" ? "✅" : "❌"})`,
                 actions: ["FETCH_THOUGHTS"],
                 source: msg.content.source,
                 });

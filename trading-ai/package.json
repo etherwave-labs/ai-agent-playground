@@ -27,7 +27,7 @@
     "dist"
   ],
   "dependencies": {
-    "@elizaos/cli": "latest",
+    "@elizaos/cli": "^1.2.10",
     "@elizaos/core": "latest",
     "@elizaos/plugin-anthropic": "1.0.3",
     "@elizaos/plugin-bootstrap": "1.0.15",

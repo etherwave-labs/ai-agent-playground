@@ -1,6 +1,6 @@
 import { Provider, Plugin } from "@elizaos/core";
 
-type IndicatorName = "atr" | "obv" | "macd" | "rsi";
+type IndicatorName = "macd" | "rsi";
 
 interface IndicatorResponse<T = unknown> {
   status: string;
@@ -106,7 +106,7 @@ async function fetchIndicatorWithRetry<T>(
 async function getMarketData(symbol = "BTC/USDT", interval: "15m" | "1h" | "4h" | "1d" = "1h") {
   console.log(`📊 Récupération des données de marché pour ${symbol} (${interval})`);
   
-  const indicators: IndicatorName[] = ["atr", "obv", "macd", "rsi"];
+  const indicators: IndicatorName[] = ["macd", "rsi"];
 
   const data: Record<string, unknown> = {};
   const errors: string[] = [];
